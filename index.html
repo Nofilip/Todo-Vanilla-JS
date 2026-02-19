@@ -7,7 +7,33 @@
     <title>todo-vanilla</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <h1>Todo List</h1>
+      <h2>Vanilla JS + localStorage</h2>
+      <div>
+       <form id="todo-form">
+        <input id="todo-input" required autocomplete="off" type="text" placeholder="Lägg till en uppgift...">
+        <button>Lägg till</button> 
+      </form>
+      </div>
+      <div>
+        <button type="button" data-filter="all">Alla</button>
+        <button type="button" data-filter="active">Aktiva</button>
+        <button type="button" data-filter="completed">Klara</button>
+      </div>
+      <div>
+        <span id="items-left"></span>
+        <button id="clear-completed" type="button">Rensa</button>
+      </div>
+      <div>
+        <ul id="todo-list">
+          <!-- todos renderas här -->
+        
+        </ul>
+      </div>
+    
+
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
