@@ -8,6 +8,8 @@ const itemsLeftEl = document.querySelector("#items-left");
 const formEl = document.querySelector("#todo-form");
 const inputEl = document.querySelector("#todo-input");
 
+const eraseEl = document.querySelector("#clear-completed");
+
 /// Lägg till ny Todo
 
 formEl.addEventListener("submit", (e) => {
@@ -69,6 +71,15 @@ listEl.addEventListener("click", (e) => {
   if (index === -1) return;
 
   todos.splice(index, 1);
+  render();
+});
+
+/// Radera alla Todos
+
+eraseEl.addEventListener("click", () => {
+  for (let i = todos.length - 1; i >= 0; i--) {
+    if (todos[i].done) todos.splice(i, 1);
+  }
   render();
 });
 
