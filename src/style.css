@@ -1,3 +1,313 @@
-.h1 {
-  justify-items: center;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0b1020;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel-strong: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.68);
+
+  --primary: #7c3aed;
+  --primary-2: #a78bfa;
+
+  --danger: #ff4d6d;
+  --success: #22c55e;
+
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+  --radius: 16px;
+  --radius-sm: 12px;
+  --ring: 0 0 0 4px rgba(124, 58, 237, 0.25);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.45;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(124, 58, 237, 0.45), transparent 60%),
+    radial-gradient(900px 500px at 80% 0%, rgba(34, 197, 94, 0.25), transparent 55%),
+    radial-gradient(900px 600px at 50% 110%, rgba(255, 77, 109, 0.18), transparent 55%),
+    var(--bg);
+  padding: 28px 18px 40px;
+}
+
+/* Center + constrain everything even without a wrapper */
+h1,
+h2,
+h3,
+#todo-form,
+#filters,
+#todo-list,
+#empty-state,
+#items-left,
+#clear-completed {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  letter-spacing: -0.02em;
+  font-size: clamp(28px, 2.5vw, 40px);
+  margin: 10px auto 6px;
+}
+
+h2,
+h3 {
+  text-align: center;
+  margin: 0 auto 18px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Form */
+#todo-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+#todo-input {
+  flex: 1;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: var(--shadow-soft);
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+#todo-input::placeholder {
+  color: rgba(255, 255, 255, 0.48);
+}
+
+#todo-input:focus {
+  border-color: rgba(167, 139, 250, 0.6);
+  box-shadow: var(--shadow-soft), var(--ring);
+  background: var(--panel-strong);
+}
+
+/* Global button base */
+button {
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 120ms ease, border-color 150ms ease, background 150ms ease, opacity 150ms ease;
+  font-weight: 650;
+}
+
+button:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: var(--panel-strong);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.72; /* still readable */
+  cursor: not-allowed;
+}
+
+/* Submit button (first button next to input) */
+#todo-form button[type="submit"] {
+  border-color: rgba(124, 58, 237, 0.45);
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.35), rgba(124, 58, 237, 0.18));
+}
+
+#todo-form button[type="submit"]:hover {
+  border-color: rgba(167, 139, 250, 0.65);
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.45), rgba(124, 58, 237, 0.22));
+}
+
+/* Filters */
+#filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.filter-btn.active {
+  text-decoration: none;
+  border-color: rgba(167, 139, 250, 0.7);
+  background: linear-gradient(180deg, rgba(167, 139, 250, 0.28), rgba(124, 58, 237, 0.14));
+  box-shadow: var(--ring);
+}
+
+/* Items-left row */
+#items-left {
+  margin-top: 6px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+/* Clear completed */
+#clear-completed {
+  margin: 0 auto 14px;
+  display: block;
+  width: fit-content;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border-color: rgba(255, 77, 109, 0.4);
+  background: rgba(255, 77, 109, 0.08);
+}
+
+#clear-completed:not(:disabled) {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#clear-completed:not(:disabled):hover {
+  border-color: rgba(255, 77, 109, 0.65);
+  background: rgba(255, 77, 109, 0.14);
+}
+
+/* When disabled, make it “inactive” but still visible */
+#clear-completed:disabled {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* List container */
+#todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* Each row */
+#todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#todo-list li:first-child {
+  border-top: none;
+}
+
+#todo-list li:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Checkbox */
+#todo-list input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-2);
+}
+
+/* Todo text */
+#todo-list span {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  font-weight: 650;
+}
+
+.done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Edit input */
+.edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  border-radius: var(--radius-sm);
+  outline: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  box-shadow: var(--shadow-soft);
+}
+
+.edit-input:focus {
+  border-color: rgba(167, 139, 250, 0.75);
+  box-shadow: var(--shadow-soft), var(--ring);
+}
+
+/* Buttons inside each li */
+#todo-list button {
+  padding: 9px 10px;
+  border-radius: 999px;
+  box-shadow: none;
+  font-weight: 750;
+}
+
+/* Erase button */
+#todo-list button[data-action="delete"] {
+  border-color: rgba(255, 77, 109, 0.45);
+  background: rgba(255, 77, 109, 0.08);
+}
+
+#todo-list button[data-action="delete"]:hover {
+  border-color: rgba(255, 77, 109, 0.75);
+  background: rgba(255, 77, 109, 0.14);
+}
+
+/* Save button */
+#todo-list button[data-action="save"] {
+  border-color: rgba(34, 197, 94, 0.45);
+  background: rgba(34, 197, 94, 0.08);
+}
+
+#todo-list button[data-action="save"]:hover {
+  border-color: rgba(34, 197, 94, 0.75);
+  background: rgba(34, 197, 94, 0.14);
+}
+
+/* Cancel button */
+#todo-list button[data-action="cancel"] {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Empty state */
+#empty-state {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-size: 14px;
 }
